@@ -12,7 +12,7 @@ export async function POST(req: Request): Promise<Response> {
         // const n=5;
         const topics_str = topics.toString();
 
-        const prompt = `Generate exactly ${number_of_questions} interview questions on the following topics: [${topics_str}]. The questions should be theoretical and can be answered verbally. The questions only be from the given topics. Please ensure the total number of questions is exactly ${number_of_questions}, not more, not less. Return the questions in a single string in this format: "Question1 || Question2 || Question3 || ..."`;
+        const prompt = `Generate exactly ${number_of_questions} interview questions on the following topics: [${topics_str}]. The questions should be theoretical and can be answered verbally. The questions only be from the given topics. Please ensure the total number of questions is exactly ${number_of_questions}, not more, not less. Return the questions in a single string in this format: "Question1 || Question2 || Question3 || ...". do not include any keys like "Question1" in the response, just provide the questions directly.`;
 
         // console.log(prompt);
 
