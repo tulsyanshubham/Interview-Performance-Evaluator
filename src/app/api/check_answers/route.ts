@@ -8,7 +8,7 @@ interface QAData {
 interface EvaluatedResponse {
     question: string;
     answer_by_user: string;
-    correct_answer: string;
+    explanation: string;
     score: number;
 }
 
@@ -21,8 +21,9 @@ export async function POST(req: Request): Promise<Response> {
             "answer_by_user": "${item.answer_by_user}"
         }`).join(", ");
 
-        const prompt = `I have a list of questions and answers provided by a user. I want you to evaluate each answer, provide the correct answer, and give a score out of 10. The response should be formatted in a single string for each question like this: "correct_answer1 ~~ Score1 || correct_answer2 ~~ Score2 || ...".
+        const prompt = `I have a list of questions and answers provided by a user. I want you to evaluate each answer, provide the correct answer with explanation, and give a score out of 10. As the user's answer is converted form speech to text so neglect any small spelling mistakes or involvement of special characters like comma, full stop, inverted comma The response should be formatted in a single string for each question like this: "correct_answer_with_explanation1 ~~ Score1 || correct_answer_with_explanation2 ~~ Score2 || ...".
         no need to include the keys like "correct_answer" or "score" in the response, just drictly provide the correct answer and score.
+        also do not make the text bold or italic by using "*" or "_" in the response.
         Please evaluate the following data:
         [${questionsAndAnswers}]
         Make sure the response is in the requested string format.`;
@@ -40,7 +41,7 @@ export async function POST(req: Request): Promise<Response> {
             return {
                 question: data[index].question,
                 answer_by_user: data[index].answer_by_user,
-                correct_answer: correctAnswer,
+                explanation: correctAnswer,
                 score: parseFloat(score)
             };
         });

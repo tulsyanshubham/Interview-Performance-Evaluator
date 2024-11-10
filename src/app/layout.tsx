@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FormDataProvider } from "../context/formData-provider";
 
 export const metadata: Metadata = {
   title: "Mock Interview",
@@ -13,9 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <FormDataProvider>
+        <body className="dark">
+          {children}
+        </body>
+      </FormDataProvider>
     </html>
   );
 }
